@@ -24,10 +24,15 @@ class CategoriaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->update($request->all());
-        return $categoria;
+        try {
+            $categoria = Categoria::findOrFail($id);
+            $categoria->update($request->all());
+            return $categoria;
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
+    
 
     public function destroy($id)
     {
