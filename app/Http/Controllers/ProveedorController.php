@@ -22,9 +22,9 @@ class ProveedorController extends Controller
         return Proveedor::create($request->all());
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $idproveedor)
     {
-        $proveedor = Proveedor::findOrFail($id);
+        $proveedor = Proveedor::findOrFail($idproveedor);
         $proveedor->update($request->all());
         return $proveedor;
     }

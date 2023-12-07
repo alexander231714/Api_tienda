@@ -22,10 +22,10 @@ class CategoriaController extends Controller
         return Categoria::create($request->all());
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $idcategoria)
     {
         try {
-            $categoria = Categoria::findOrFail($id);
+            $categoria = Categoria::findOrFail($idcategoria);
             $categoria->update($request->all());
             return $categoria;
         } catch (\Exception $e) {

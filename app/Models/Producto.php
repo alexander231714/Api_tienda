@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Producto extends Model
 {
+    use HasFactory;
+
     protected $table = 'productos';
+    protected $primaryKey = 'idproducto';
     protected $fillable = [
         'idcategoria',
         'idproveedor',
@@ -17,4 +20,14 @@ class Producto extends Model
         'descripcion',
         'imagen',
     ];
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'idcategoria');
+    }
+
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'idproveedor');
+    }
 }

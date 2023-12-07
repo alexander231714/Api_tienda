@@ -9,7 +9,7 @@ class ProductoController extends Controller
 {
     public function index()
     {
-        return Producto::all();
+        return Producto::with(['categoria', 'proveedor'])->get();
     }
 
     public function show($id)
@@ -22,9 +22,9 @@ class ProductoController extends Controller
         return Producto::create($request->all());
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $idproducto)
     {
-        $producto = Producto::findOrFail($id);
+        $producto = Producto::findOrFail($idproducto);
         $producto->update($request->all());
         return $producto;
     }
