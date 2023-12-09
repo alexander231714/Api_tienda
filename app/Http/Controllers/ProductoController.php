@@ -60,4 +60,29 @@ class ProductoController extends Controller
         $producto->delete();
         return response()->json(null, 204);
     }
+    
+    public function search(Request $request)
+    {
+      $query = Producto::query();
+  
+      if ($request->has('filtroNombreProducto')) {
+        $query->where('nombre_producto', 'like', '%' . $request->input('filtroNombreProducto') . '%');
+      }
+  
+      if ($request->has('filtroNombreCategoria')) {
+        $query->whereHas('categoria', function ($q) use ($request) {
+          $q->where('nombrecategoria', 'like', '%' . $request->input('filtroNombreCategoria') . '%');
+        });
+      }
+  
+      if ($request->has('filtroNombreProveedor')) {
+        $query->whereHas('proveedor', function ($q) use ($request) {
+          $q->where('nombre_proveedor', 'like', '%' . $request->input('filtroNombreProveedor') . '%');
+        });
+      }
+  
+      $productos = $query->with(['categoria', 'proveedor'])->get();
+  
+      return response()->json($productos);
+    }
 }
