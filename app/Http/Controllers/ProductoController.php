@@ -80,6 +80,11 @@ class ProductoController extends Controller
         $q->where('nombre_proveedor', 'like', '%' . $request->input('filtroNombreProveedor') . '%');
       });
     }
+    
+    // Nuevo código para filtrar por rango de precio
+    if ($request->has('precioMin') && $request->has('precioMax')) {
+      $query->whereBetween('precio', [$request->input('precioMin'), $request->input('precioMax')]);
+    }
 
     $productos = $query->with(['categoria', 'proveedor'])->get();
 
@@ -92,5 +97,4 @@ class ProductoController extends Controller
     $productos = Producto::all();
     return response()->json($productos);
   }
-  
 }
